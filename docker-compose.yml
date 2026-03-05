@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: sniper
+      POSTGRES_PASSWORD: sniper123
+      POSTGRES_DB: sniper
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://sniper:sniper123@postgres:5432/sniper
+      HELIUS_RPC: ${HELIUS_RPC}
+      HELIUS_GRPC: ${HELIUS_GRPC}
+      HELIUS_API_KEY: ${HELIUS_API_KEY}
+      PRIVATE_KEY: ${PRIVATE_KEY}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build: ./frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
