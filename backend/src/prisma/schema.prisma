@@ -1,0 +1,44 @@
+generator client { 
+  provider = "prisma-client-js" 
+}
+datasource db { 
+  provider = "postgresql" 
+  url      = env("DATABASE_URL") 
+}
+
+model User {
+  id        String     @id @default(cuid())
+  wallet    String     @unique
+  positions Position[]
+  config    Config?
+}
+
+model Position {
+  id               String   @id @default(cuid())
+  userId           String
+  mint             String
+  bondingCurve     String
+  entryPrice       Float
+  peakPrice        Float    @default(0)
+  currentPrice     Float    @default(0)
+  amount           Float
+  entrySol         Float
+  status           String   @default("open")
+  tpPercent        Float    @default(200)
+  slPercent        Float    @default(50)
+  trailingPercent  Float    @default(10)
+  exitSignature    String?
+  exitPrice        Float?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  user             User     @relation(fields: [userId], references: [id])
+}
+
+model Config {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  maxPositions Int     @default(5)
+  buyAmountSol Float   @default(0.5)
+  enabled      Boolean @default(true)
+  user         User    @relation(fields: [userId], references: [id])
+}
