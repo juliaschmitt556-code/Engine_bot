@@ -1,0 +1,29 @@
+{
+  "name": "solana-sniper-backend",
+  "version": "3.1.0",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@jup-ag/core": "^6.0.0",
+    "@prisma/client": "^5.15.0",
+    "@solana/web3.js": "^1.95.0",
+    "@triton-one/yellowstone-grpc": "^0.3.0",
+    "axios": "^1.7.7",
+    "bs58": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "prisma": "^5.15.0",
+    "pumpdotfun-sdk": "^1.5.4",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.7.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
